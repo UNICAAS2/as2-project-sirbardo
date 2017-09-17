@@ -39,7 +39,8 @@ DelaunayManager::DelaunayManager(QWidget *parent) :
     ui(new Ui::DelaunayManager),
     mainWindow((MainWindow&)*parent),
     boundingBox(Point2Dd(-BOUNDINGBOX, -BOUNDINGBOX),
-                Point2Dd(BOUNDINGBOX, BOUNDINGBOX))
+                Point2Dd(BOUNDINGBOX, BOUNDINGBOX)),
+    boundingTriangle(BT_P1, BT_P2, BT_P3)
 {
     //UI setup
     ui->setupUi(this);
@@ -53,7 +54,6 @@ DelaunayManager::DelaunayManager(QWidget *parent) :
     // putting the drawable object to the mainWindow.
     // the mainWindow will take care of the rendering of the bounding box
     mainWindow.pushObj(&boundingBox, "Bounding box");
-
     mainWindow.updateGlCanvas();
 
     fitScene();
@@ -126,7 +126,14 @@ void DelaunayManager::on_clearPointsPushButton_clicked() {
  * @brief Show bounding triangle checkbox event handler
  */
 void DelaunayManager::on_showBoundingTriangleCheckBox_stateChanged(int arg1) {
+
     //if arg1 is true, you must draw the bounding triangle of your triangulation
+    if (arg1 == Qt::Checked){
+        mainWindow.pushObj(&boundingTriangle, "Bounding triangle");
+    }
+    else {
+        mainWindow.deleteObj(&boundingTriangle);
+    }
 
     //
     mainWindow.updateGlCanvas();

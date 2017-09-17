@@ -2,5 +2,5 @@
 
 DagNode::DagNode()
 {
-
+    tris.push_back( Triangle() );
 }

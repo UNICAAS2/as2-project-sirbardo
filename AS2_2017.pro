@@ -31,13 +31,25 @@ message(Included modules: $$MODULES)
 HEADERS += \
     gui/delaunaymanager.h \
     utils/fileutils.h \
-    utils/delaunay_checker.h
+    utils/delaunay_checker.h \
+    drawableboundingtriangle.h \
+    dagnode.h \
+    dagdelaunay.h \
+    triangle.h \
+    trimesh2d.h
 
 SOURCES += \
     main.cpp \
     gui/delaunaymanager.cpp \
     utils/fileutils.cpp \
-    utils/delaunay_checker.cpp
+    utils/delaunay_checker.cpp \
+    drawableboundingtriangle.cpp \
+    dagdelaunay.cpp \
+    dagnode.cpp \
+    trimesh2d.cpp
+
+DISTFILES += \
+    triangle.cpp
 
 FORMS += \
     gui/delaunaymanager.ui
