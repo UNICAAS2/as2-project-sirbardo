@@ -2,20 +2,23 @@
 #define DAGDELAUNAY_H
 
 #include "dagnode.h"
-#include "
+#include "utils/triutils.h"
+
+class Triangulation;
 
 class DagDelaunay
 {
     public:
         DagDelaunay();
-        DagNode* locate(Point2Dd);
 
+        DagNode* locate(Point2Dd x, Triangulation *t);
 
-        DagNode *getRoot() const;
+        DagNode *getRoot();
 
 private:
 
         DagNode *root;
+        DagNode *locateRec(Point2Dd x, Triangulation *t, DagNode *node);
 };
 
 

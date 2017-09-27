@@ -36,7 +36,9 @@ HEADERS += \
     dagnode.h \
     dagdelaunay.h \
     triangle.h \
-    delaunaytriangulation.h
+    delaunaytriangulation.h \
+    drawabledelaunaytriangulation.h \
+    utils/triutils.h
 
 SOURCES += \
     main.cpp \
@@ -46,7 +48,9 @@ SOURCES += \
     drawableboundingtriangle.cpp \
     dagdelaunay.cpp \
     dagnode.cpp \
-    delaunaytriangulation.cpp
+    delaunaytriangulation.cpp \
+    drawabledelaunaytriangulation.cpp \
+    utils/triutils.cpp
 
 DISTFILES += \
     triangle.cpp

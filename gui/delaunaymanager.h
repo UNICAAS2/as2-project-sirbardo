@@ -7,6 +7,7 @@
 
 #include <viewer/drawable_objects/drawableboundingbox2d.h>
 #include "drawableboundingtriangle.h"
+#include "drawabledelaunaytriangulation.h"
 
 namespace Ui {
     class DelaunayManager;
@@ -39,6 +40,7 @@ private:
 
     const DrawableBoundingBox2D boundingBox; //it is const because, once defined and initialized, it will never change!
     const DrawableBoundingTriangle boundingTriangle;
+    DrawableDelaunayTriangulation triangulation;
 
     /*****************
     * Private methods *

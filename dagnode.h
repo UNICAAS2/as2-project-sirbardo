@@ -9,11 +9,13 @@ class DagNode
         DagNode(int index);
 
         void addChild(DagNode *child);
-        std::vector<DagNode *> getChildren() const;
-
+        std::vector<DagNode *> getChildren();
+        bool isLeaf();
         int getTIndex() const;
         void setTIndex(int value);
 
+        void setChildren(const std::vector<DagNode *> &value);
+        bool isAlive();
 private:
         int tIndex;
         std::vector<DagNode*> children;

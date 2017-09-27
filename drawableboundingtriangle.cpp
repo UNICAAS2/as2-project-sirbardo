@@ -1,7 +1,5 @@
 #include "drawableboundingtriangle.h"
 
-#include "viewer/objects/objects.h"
-
 DrawableBoundingTriangle::DrawableBoundingTriangle(double thirdCoord) : Triangle(), pointSize(2), colorPoint(), edgeWidth(1), colorEdge(), thirdCoord(thirdCoord)
 {
 }

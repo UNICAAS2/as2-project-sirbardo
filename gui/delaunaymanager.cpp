@@ -40,7 +40,8 @@ DelaunayManager::DelaunayManager(QWidget *parent) :
     mainWindow((MainWindow&)*parent),
     boundingBox(Point2Dd(-BOUNDINGBOX, -BOUNDINGBOX),
                 Point2Dd(BOUNDINGBOX, BOUNDINGBOX)),
-    boundingTriangle(BT_P1, BT_P2, BT_P3)
+    boundingTriangle(BT_P1, BT_P2, BT_P3),
+    triangulation(Triangle(boundingTriangle), 0)
 {
     //UI setup
     ui->setupUi(this);
@@ -54,6 +55,7 @@ DelaunayManager::DelaunayManager(QWidget *parent) :
     // putting the drawable object to the mainWindow.
     // the mainWindow will take care of the rendering of the bounding box
     mainWindow.pushObj(&boundingBox, "Bounding box");
+    mainWindow.pushObj(&triangulation, "Triangulation");
     mainWindow.updateGlCanvas();
 
     fitScene();
@@ -178,10 +180,11 @@ void DelaunayManager::point2DClicked(const Point2Dd& p) {
     }
     else {
         //comment the next line
-        QMessageBox::information(this, "Point Clicked", "Point [" + QString::number(p.x()) + "," + QString::number(p.y()) + "].");
+        //QMessageBox::information(this, "Point Clicked", "Point [" + QString::number(p.x()) + "," + QString::number(p.y()) + "].");
         //manage here the insertion of the point inside the triangulation
         /******/
-
+            qDebug()<<"Adding point" << p.x() << " " << p.y();
+            triangulation.addPoint(p);
         /******/
 
     }

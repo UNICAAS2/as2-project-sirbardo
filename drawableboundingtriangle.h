@@ -5,6 +5,8 @@
 #include <triangle.h>
 #include <common/color.h>
 #include "viewer/interfaces/drawable_object.h"
+#include "viewer/objects/objects.h"
+
 
 class DrawableBoundingTriangle : public Triangle, public DrawableObject
 {
