@@ -5,6 +5,11 @@ DagNode::DagNode(int index)
     tIndex = index;
 }
 
+DagNode::~DagNode()
+{
+    children.clear();
+}
+
 std::vector<DagNode *>& DagNode::getChildren()
 {
     return children;
@@ -21,7 +26,7 @@ void DagNode::addChild(DagNode *child)
     children.push_back(child);
 }
 
-int DagNode::getTIndex() const
+int DagNode::getTIndex()
 {
     return tIndex;
 }

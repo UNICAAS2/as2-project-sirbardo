@@ -44,17 +44,51 @@ Triangulation::Triangulation(Triangle a)
 
 }
 
+void Triangulation::clearTriangulation()
+{
+    vertices.resize(3); //resize also destroys elements, so it should destroy each Point2Dd correctly
+    tris.resize(3);
+
+    for (DagNode* node : adj)
+        node = nullptr;
+
+    adj.clear();
+    adj.push_back(dag->getRoot());
+    adj.push_back(dag->getRoot());
+    adj.push_back(dag->getRoot());
+    activeList.resize(1);
+
+    //Clearing Dag
+
+    dag->clearDag();
+}
+
+
+
 void Triangulation::addPoint(Point2Dd newPoint)
 {
+    DagNode* oldTri = dag->locate(newPoint, this);
+    uint i = oldTri->getTIndex();
+
+    Point2Dd a = vertices[tris[i]];
+    Point2Dd b = vertices[tris[i+1]];
+    Point2Dd c = vertices[tris[i+2]];
+
+    if (newPoint == a || newPoint == b || newPoint == c) return;
+
+    if (geomUtils::isPointOnLine(newPoint, a, b) ||
+        geomUtils::isPointOnLine(newPoint, b, c) ||
+        geomUtils::isPointOnLine(newPoint, c, a)
+        )
+        qDebug()<<"On edge.";
+
     vertices.push_back(newPoint);
     int newPointIndex = vertices.size()-1;
-    DagNode* oldTri = dag->locate(newPoint, this);
     DagNode* newTri1Node;
     DagNode* newTri2Node;
     DagNode* newTri3Node;
     int newTri1, newTri2, newTri3;
 
-    uint i = oldTri->getTIndex();
 
     //triangle being split is not active anymore
     activeList[i/3] = false;
@@ -65,6 +99,7 @@ void Triangulation::addPoint(Point2Dd newPoint)
     tris.push_back(newPointIndex);
     newTri1 = tris.size()-3;
     newTri1Node = new DagNode(newTri1);
+    dag->addNode(newTri1Node);
     oldTri->addChild(newTri1Node);
     activeList.push_back(true);
 
@@ -74,6 +109,7 @@ void Triangulation::addPoint(Point2Dd newPoint)
     tris.push_back(tris[i+2]);
     newTri2 = tris.size()-3;
     newTri2Node = new DagNode(newTri2);
+    dag->addNode(newTri2Node);
     oldTri->addChild(newTri2Node);
     activeList.push_back(true);
 
@@ -84,6 +120,7 @@ void Triangulation::addPoint(Point2Dd newPoint)
     tris.push_back(tris[i+2]);
     newTri3 = tris.size()-3;
     newTri3Node = new DagNode(newTri3);
+    dag->addNode(newTri3Node);
     oldTri->addChild(newTri3Node);
     activeList.push_back(true);
 
@@ -140,6 +177,7 @@ void Triangulation::addPoint(Point2Dd newPoint)
     //if (adj[(tris.size()-3)+2]->getTIndex() != 0) legalizeEdge(tris.size()-3, 2);
 
 
+
     legalizeEdge(newTri1, 0);
     legalizeEdge(newTri2, 1);
     legalizeEdge(newTri3, 2);
@@ -157,7 +195,7 @@ void Triangulation::legalizeEdge(int tri, int edge)
     DagNode* adjTriNode = adj[tri+edge];
     int adjTri = adjTriNode->getTIndex();
     int oppositeVertex;
-    int vertex1, vertex2, vertexNotEdge, adjAdj, adjTriToUpdate;
+    int vertex1, vertex2, vertexNotEdge, adjAdj;
 
 
     switch(edge)
@@ -199,6 +237,7 @@ void Triangulation::legalizeEdge(int tri, int edge)
             tris.push_back(oppositeVertex);
             tris.push_back(vertexNotEdge);
             DagNode* tri1Node = new DagNode (tris.size()-3);
+            dag->addNode(tri1Node);
             activeList.push_back(true);
 
             //New Triangle 2
@@ -206,6 +245,7 @@ void Triangulation::legalizeEdge(int tri, int edge)
             tris.push_back(vertex2);
             tris.push_back(vertexNotEdge);
             DagNode* tri2Node = new DagNode(tris.size()-3);
+            dag->addNode(tri2Node);
             activeList.push_back(true);
 
             //Refresh Dag
@@ -315,6 +355,9 @@ void Triangulation::legalizeEdge(int tri, int edge)
             tris.push_back(oppositeVertex);
             tris.push_back(vertexNotEdge);
             DagNode* tri1Node = new DagNode (tris.size()-3);
+            dag->addNode(tri1Node);
+
+
             activeList.push_back(true);
 
             //New Triangle 2
@@ -322,6 +365,8 @@ void Triangulation::legalizeEdge(int tri, int edge)
             tris.push_back(vertex2);
             tris.push_back(vertexNotEdge);
             DagNode* tri2Node = new DagNode(tris.size()-3);
+            dag->addNode(tri2Node);
+
             activeList.push_back(true);
 
             //Refresh Dag
@@ -431,6 +476,8 @@ void Triangulation::legalizeEdge(int tri, int edge)
             tris.push_back(oppositeVertex);
             tris.push_back(vertexNotEdge);
             DagNode* tri1Node = new DagNode (tris.size()-3);
+            dag->addNode(tri1Node);
+
             activeList.push_back(true);
 
             //New Triangle 2
@@ -438,6 +485,7 @@ void Triangulation::legalizeEdge(int tri, int edge)
             tris.push_back(vertex2);
             tris.push_back(vertexNotEdge);
             DagNode* tri2Node = new DagNode(tris.size()-3);
+            dag->addNode(tri2Node);
             activeList.push_back(true);
 
             //Refresh Dag

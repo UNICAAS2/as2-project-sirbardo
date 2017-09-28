@@ -2,7 +2,7 @@
 #define DAGDELAUNAY_H
 
 #include "dagnode.h"
-#include "utils/triutils.h"
+#include "utils/geomutils.h"
 
 class Triangulation;
 
@@ -12,13 +12,16 @@ class DagDelaunay
         DagDelaunay();
 
         DagNode* locate(Point2Dd &x, Triangulation *t);
+        void addNode(DagNode*toAdd);
 
-        DagNode *getRoot();
+        DagNode* getRoot();
 
+        void clearDag();
 private:
 
-        DagNode *root;
-        DagNode *locateRec(Point2Dd &x, Triangulation *t, DagNode *node);
+        DagNode* root;
+        std::vector<DagNode*> allNodes;
+        DagNode* locateRec(Point2Dd &x, Triangulation *t, DagNode *node);
 };
 
 

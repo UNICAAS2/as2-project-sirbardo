@@ -38,7 +38,7 @@ HEADERS += \
     triangle.h \
     delaunaytriangulation.h \
     drawabledelaunaytriangulation.h \
-    utils/triutils.h
+    utils/geomutils.h
 
 SOURCES += \
     main.cpp \
@@ -50,7 +50,7 @@ SOURCES += \
     dagnode.cpp \
     delaunaytriangulation.cpp \
     drawabledelaunaytriangulation.cpp \
-    utils/triutils.cpp
+    utils/geomutils.cpp
 
 DISTFILES += \
     triangle.cpp

@@ -119,6 +119,8 @@ void DelaunayManager::on_resetScenePushButton_clicked() {
 void DelaunayManager::on_clearPointsPushButton_clicked() {
     //clear here your triangulation
 
+    triangulation.clearTriangulation();
+
     //
     mainWindow.updateGlCanvas();
 }
