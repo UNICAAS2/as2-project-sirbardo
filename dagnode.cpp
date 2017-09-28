@@ -5,7 +5,7 @@ DagNode::DagNode(int index)
     tIndex = index;
 }
 
-std::vector<DagNode *> DagNode::getChildren()
+std::vector<DagNode *>& DagNode::getChildren()
 {
     return children;
 }

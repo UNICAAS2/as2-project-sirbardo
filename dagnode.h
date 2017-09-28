@@ -9,7 +9,7 @@ class DagNode
         DagNode(int index);
 
         void addChild(DagNode *child);
-        std::vector<DagNode *> getChildren();
+        std::vector<DagNode *> &getChildren();
         bool isLeaf();
         int getTIndex() const;
         void setTIndex(int value);

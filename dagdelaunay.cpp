@@ -8,19 +8,19 @@ DagDelaunay::DagDelaunay()
     root = new DagNode(0);
 }
 
-DagNode* DagDelaunay::getRoot()
+DagNode *DagDelaunay::getRoot()
 {
     return root;
 }
 
-DagNode* DagDelaunay::locate(Point2Dd &x, Triangulation *t)
+DagNode *DagDelaunay::locate(Point2Dd &x, Triangulation *t)
 {
 
     return locateRec(x, t, root);
 
 }
 
-DagNode* DagDelaunay::locateRec(Point2Dd &x, Triangulation *t, DagNode* node)
+DagNode *DagDelaunay::locateRec(Point2Dd &x, Triangulation *t, DagNode* node)
 {
 
     if (node->isLeaf())

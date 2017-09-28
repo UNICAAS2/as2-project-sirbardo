@@ -146,7 +146,7 @@ void Triangulation::addPoint(Point2Dd newPoint)
 
 }
 
-std::vector<Point2Dd> Triangulation::getVertices() const
+std::vector<Point2Dd> &Triangulation::getVertices()
 {
     return vertices;
 }
@@ -524,17 +524,17 @@ void Triangulation::legalizeEdge(int tri, int edge)
 
 
 }
-std::vector<uint> Triangulation::getTris() const
+std::vector<uint> &Triangulation::getTris()
 {
     return tris;
 }
 
-std::vector<DagNode*> Triangulation::getAdj() const
+std::vector<DagNode *> &Triangulation::getAdj()
 {
     return adj;
 }
 
-std::vector<bool> Triangulation::getActiveList() const
+std::vector<bool> &Triangulation::getActiveList()
 {
     return activeList;
 }

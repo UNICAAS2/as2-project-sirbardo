@@ -15,12 +15,10 @@ class Triangulation
 
         void addPoint(Point2Dd newPoint);
 
-        std::vector<Point2Dd> getVertices() const;
-        std::vector<uint> getTris() const;
-        std::vector<DagNode*> getAdj() const;
-
-
-        std::vector<bool> getActiveList() const;
+        std::vector<Point2Dd> &getVertices();
+        std::vector<uint> &getTris();
+        std::vector<DagNode*> &getAdj();
+        std::vector<bool> &getActiveList();
 
 protected:
         std::vector<Point2Dd> vertices;
