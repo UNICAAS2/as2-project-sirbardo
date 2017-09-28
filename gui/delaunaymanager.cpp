@@ -157,6 +157,10 @@ void DelaunayManager::on_loadPointsPushButton_clicked() {
         /****/
         //launch your triangulation algorithm here
 
+        for (Point2Dd p : points)
+        {
+            triangulation.addPoint(p);
+        }
 
         /****/
         t.stopAndPrint();
@@ -197,6 +201,10 @@ void DelaunayManager::point2DClicked(const Point2Dd& p) {
 void DelaunayManager::on_checkTriangulationPushButton_clicked() {
     std::vector<Point2Dd> points;
     Array2D<unsigned int> triangles;
+    std::vector<uint> allTris;
+    std::vector<bool> activeTris;
+    uint nActive = 0;
+    uint indexTri = 0;
 
     //get your triangulation here and save it in the vector points and in the matrix triangles
     //"points" will be a vector where every position i is associated to a point of the triangulation
@@ -207,6 +215,29 @@ void DelaunayManager::on_checkTriangulationPushButton_clicked() {
     //you can initially resize the matrix "triangles" by calling triangles.resize(n, 3),
     //and then fill the matrix using the assignment operator: triangles(i,j) = a;
 
+    allTris = triangulation.getTris();
+    activeTris = triangulation.getActiveList();
+    points = triangulation.getVertices();
+
+    for (bool tri : activeTris)
+    {
+        if (tri) nActive++;
+    }
+
+    triangles.resize(nActive, 3);
+
+    for (int i = 0; i < activeTris.size(); i++)
+    {
+
+        if (activeTris[i])
+        {
+
+            for (int j = 0; j < 3; j++)
+                triangles(indexTri, j) = allTris[i*3 + j];
+
+            indexTri++;
+        }
+}
 
     if (DelaunayTriangulation::Checker::isDeulaunayTriangulation(points, triangles)) {
         QMessageBox::information(this, "Triangulation checking", "Success: it is a Delaunay triangulation!");

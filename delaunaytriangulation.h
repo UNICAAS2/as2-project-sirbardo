@@ -20,7 +20,9 @@ class Triangulation
         std::vector<DagNode*> getAdj() const;
 
 
-    protected:
+        std::vector<bool> getActiveList() const;
+
+protected:
         std::vector<Point2Dd> vertices;
         std::vector<uint> tris;
         std::vector<DagNode*> adj;

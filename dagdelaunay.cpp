@@ -23,10 +23,8 @@ DagNode* DagDelaunay::locate(Point2Dd x, Triangulation *t)
 DagNode* DagDelaunay::locateRec(Point2Dd x, Triangulation *t, DagNode* node)
 {
 
-    qDebug()<<"a";
     if (node->isLeaf())
         return node;
-    qDebug()<<"b";
 
     for(DagNode* child : node->getChildren())
     {
@@ -35,10 +33,8 @@ DagNode* DagDelaunay::locateRec(Point2Dd x, Triangulation *t, DagNode* node)
         t->getVertices()[t->getTris()[child->getTIndex()+2]]),
         x))
         {
-            qDebug()<<"c";
             return locateRec(x, t, child);
         }
     }
 
-    qDebug()<<"Oh no!";
 }

@@ -92,50 +92,58 @@ void Triangulation::addPoint(Point2Dd newPoint)
     //adjacencies of the first triangle
 
     adj.push_back(adj[i]); //along edge 01->parentAdj along 01, 12->triangle 2, 20->triangle 3
-    adj.push_back(oldTri->getChildren()[1]);
-    adj.push_back(oldTri->getChildren()[2]);
+    adj.push_back(newTri2Node);
+    adj.push_back(newTri3Node);
 
     int adjTri = adj[i]->getTIndex();
 
-    if (tris[adjTri] != tris[newTri1] && tris[adjTri] != tris[newTri1+1]) adj[adjTri+1] = newTri1Node;
-    if (tris[adjTri+1] != tris[newTri1] && tris[adjTri+1] != tris[newTri1+1]) adj[adjTri+2] = newTri1Node;
-    if (tris[adjTri+2] != tris[newTri1] && tris[adjTri+2] != tris[newTri1+1]) adj[adjTri] = newTri1Node;
-
+    if (adjTri != 0)
+    {
+        if (tris[adjTri] != tris[newTri1] && tris[adjTri] != tris[newTri1+1]) adj[adjTri+1] = newTri1Node;
+        if (tris[adjTri+1] != tris[newTri1] && tris[adjTri+1] != tris[newTri1+1]) adj[adjTri+2] = newTri1Node;
+        if (tris[adjTri+2] != tris[newTri1] && tris[adjTri+2] != tris[newTri1+1]) adj[adjTri] = newTri1Node;
+    }
 
     //adjacencies of the second triangle
 
-    adj.push_back(oldTri->getChildren()[0]); //along edge 01->triangle 1, 12->parentAdj along 12 20->triangle 3
+    adj.push_back(newTri1Node); //along edge 01->triangle 1, 12->parentAdj along 12 20->triangle 3
     adj.push_back(adj[i+1]);
-    adj.push_back(oldTri->getChildren()[2]);
+    adj.push_back(newTri3Node);
 
     adjTri = adj[i+1]->getTIndex();
 
-    if (tris[adjTri] != tris[newTri2+1] && tris[adjTri] != tris[newTri2+2]) adj[adjTri+1] = newTri2Node;
-    if (tris[adjTri+1] != tris[newTri2+1] && tris[adjTri+1] != tris[newTri2+2]) adj[adjTri+2] = newTri2Node;
-    if (tris[adjTri+2] != tris[newTri2+1] && tris[adjTri+2] != tris[newTri2+2]) adj[adjTri] = newTri2Node;
-
+    if (adjTri != 0)
+    {
+        if (tris[adjTri] != tris[newTri2+1] && tris[adjTri] != tris[newTri2+2]) adj[adjTri+1] = newTri2Node;
+        if (tris[adjTri+1] != tris[newTri2+1] && tris[adjTri+1] != tris[newTri2+2]) adj[adjTri+2] = newTri2Node;
+        if (tris[adjTri+2] != tris[newTri2+1] && tris[adjTri+2] != tris[newTri2+2]) adj[adjTri] = newTri2Node;
+    }
 
     //adjacencies of the third triangle
 
-    adj.push_back(oldTri->getChildren()[0]); //along edge 01->triangle 1, 12->triangle 2, 20->parentAdj along 20
-    adj.push_back(oldTri->getChildren()[1]);
+    adj.push_back(newTri1Node); //along edge 01->triangle 1, 12->triangle 2, 20->parentAdj along 20
+    adj.push_back(newTri2Node);
     adj.push_back(adj[i+2]);
 
     adjTri = adj[i+2]->getTIndex();
 
-    if (tris[adjTri] != tris[newTri3] && tris[adjTri] != tris[newTri3+2]) adj[adjTri+1] = newTri3Node;
-    if (tris[adjTri+1] != tris[newTri3] && tris[adjTri+1] != tris[newTri3+2]) adj[adjTri+2] = newTri3Node;
-    if (tris[adjTri+2] != tris[newTri3] && tris[adjTri+2] != tris[newTri3+2]) adj[adjTri] = newTri3Node;
+    if (adjTri != 0)
+    {
+        if (tris[adjTri] != tris[newTri3] && tris[adjTri] != tris[newTri3+2]) adj[adjTri+1] = newTri3Node;
+        if (tris[adjTri+1] != tris[newTri3] && tris[adjTri+1] != tris[newTri3+2]) adj[adjTri+2] = newTri3Node;
+        if (tris[adjTri+2] != tris[newTri3] && tris[adjTri+2] != tris[newTri3+2]) adj[adjTri] = newTri3Node;
+    }
 
 
-    /*
-    if (adj[(tris.size()-9)+0]->getTIndex() != 0) legalizeEdge(tris.size()-9, 0);
-    if (adj[(tris.size()-6)+1]->getTIndex() != 0) legalizeEdge(tris.size()-6, 1);
-    if (adj[(tris.size()-3)+2]->getTIndex() != 0) legalizeEdge(tris.size()-3, 2);
-    */
-    legalizeEdge(tris.size()-9, 0);
-    legalizeEdge(tris.size()-6, 1);
-    legalizeEdge(tris.size()-3, 2);
+    //if (adj[(tris.size()-9)+0]->getTIndex() != 0) legalizeEdge(tris.size()-9, 0);
+    //if (adj[(tris.size()-6)+1]->getTIndex() != 0) legalizeEdge(tris.size()-6, 1);
+    //if (adj[(tris.size()-3)+2]->getTIndex() != 0) legalizeEdge(tris.size()-3, 2);
+
+
+    legalizeEdge(newTri1, 0);
+    legalizeEdge(newTri2, 1);
+    legalizeEdge(newTri3, 2);
+
 }
 
 std::vector<Point2Dd> Triangulation::getVertices() const
@@ -150,6 +158,7 @@ void Triangulation::legalizeEdge(int tri, int edge)
     int adjTri = adjTriNode->getTIndex();
     int oppositeVertex;
     int vertex1, vertex2, vertexNotEdge, adjAdj, adjTriToUpdate;
+
 
     switch(edge)
     {
@@ -179,7 +188,6 @@ void Triangulation::legalizeEdge(int tri, int edge)
         if (DelaunayTriangulation::Checker::isPointLyingInCircle(vertices[vertex1], vertices[vertex2], vertices[vertexNotEdge], vertices[oppositeVertex], false))
         {
             /*FLIP*/
-            qDebug() << "Flipping edge: " << vertex1 << " - " << vertex2 << ", opposite vertex is: " << oppositeVertex;
 
 
             //deactivate the two triangles involved
@@ -251,14 +259,21 @@ void Triangulation::legalizeEdge(int tri, int edge)
 
             int startingVertex4, incidentTri4;
             incidentTri4 = adj[tri+1]->getTIndex();
-            if (tris[incidentTri4] !=  vertexNotEdge && tris[incidentTri4] != oppositeVertex) startingVertex4 = 1;
-            if (tris[incidentTri4+1] !=  vertexNotEdge && tris[incidentTri4+1] != oppositeVertex) startingVertex4 = 2;
-            if (tris[incidentTri4+2] !=  vertexNotEdge && tris[incidentTri4+2] != oppositeVertex) startingVertex4 = 0;
+            if (tris[incidentTri4] !=  vertexNotEdge && tris[incidentTri4] != vertex2) startingVertex4 = 1;
+            if (tris[incidentTri4+1] !=  vertexNotEdge && tris[incidentTri4+1] != vertex2) startingVertex4 = 2;
+            if (tris[incidentTri4+2] !=  vertexNotEdge && tris[incidentTri4+2] != vertex2) startingVertex4 = 0;
 
             adj[incidentTri4+startingVertex4] = tri2Node;
 
-            if (adj[tris.size()-6]->getTIndex() != 0) legalizeEdge(tris.size()-6, 0);
-            if (adj[tris.size()-6]->getTIndex() != 0) legalizeEdge(tris.size()-3, 0);
+
+            uint newTri1 = tris.size()-6;
+            uint newTri2 = tris.size()-3;
+
+            if (adj[newTri1]->getTIndex() != 0) legalizeEdge(newTri1, 0);
+            if (adj[newTri2]->getTIndex() != 0) legalizeEdge(newTri2, 0);
+
+            //legalizeEdge(tris.size()-6, 0);
+            //legalizeEdge(tris.size()-3, 0);
 
         }
 
@@ -290,7 +305,6 @@ void Triangulation::legalizeEdge(int tri, int edge)
         {
             /*FLIP*/
 
-            qDebug() << "Flipping edge: " << vertex1 << " - " << vertex2 << ", opposite vertex is: " << oppositeVertex;
 
             //deactivate the two triangles involved
             activeList[tri/3] = false;
@@ -361,14 +375,21 @@ void Triangulation::legalizeEdge(int tri, int edge)
 
             int startingVertex4, incidentTri4;
             incidentTri4 = adj[tri+2]->getTIndex();
-            if (tris[incidentTri4] !=  vertexNotEdge && tris[incidentTri4] != oppositeVertex) startingVertex4 = 1;
-            if (tris[incidentTri4+1] !=  vertexNotEdge && tris[incidentTri4+1] != oppositeVertex) startingVertex4 = 2;
-            if (tris[incidentTri4+2] !=  vertexNotEdge && tris[incidentTri4+2] != oppositeVertex) startingVertex4 = 0;
+            if (tris[incidentTri4] !=  vertexNotEdge && tris[incidentTri4] != vertex2) startingVertex4 = 1;
+            if (tris[incidentTri4+1] !=  vertexNotEdge && tris[incidentTri4+1] != vertex2) startingVertex4 = 2;
+            if (tris[incidentTri4+2] !=  vertexNotEdge && tris[incidentTri4+2] != vertex2) startingVertex4 = 0;
 
             adj[incidentTri4+startingVertex4] = tri2Node;
 
-            if (adj[tris.size()-6]->getTIndex() != 0) legalizeEdge(tris.size()-6, 0);
-            if (adj[tris.size()-6]->getTIndex() != 0) legalizeEdge(tris.size()-3, 0);
+
+            uint newTri1 = tris.size()-6;
+            uint newTri2 = tris.size()-3;
+
+            if (adj[newTri1]->getTIndex() != 0) legalizeEdge(newTri1, 0);
+            if (adj[newTri2]->getTIndex() != 0) legalizeEdge(newTri2, 0);
+
+            //legalizeEdge(tris.size()-6, 0);
+            //legalizeEdge(tris.size()-3, 0);
 
         }
         break;
@@ -398,7 +419,6 @@ void Triangulation::legalizeEdge(int tri, int edge)
         {
             /*FLIP*/
 
-            qDebug() << "Flipping edge: " << vertex1 << " - " << vertex2 << ", opposite vertex is: " << oppositeVertex;
 
 
             //deactivate the two triangles involved
@@ -471,14 +491,21 @@ void Triangulation::legalizeEdge(int tri, int edge)
 
             int startingVertex4, incidentTri4;
             incidentTri4 = adj[tri]->getTIndex();
-            if (tris[incidentTri4] !=  vertexNotEdge && tris[incidentTri4] != oppositeVertex) startingVertex4 = 1;
-            if (tris[incidentTri4+1] !=  vertexNotEdge && tris[incidentTri4+1] != oppositeVertex) startingVertex4 = 2;
-            if (tris[incidentTri4+2] !=  vertexNotEdge && tris[incidentTri4+2] != oppositeVertex) startingVertex4 = 0;
+            if (tris[incidentTri4] !=  vertexNotEdge && tris[incidentTri4] != vertex2) startingVertex4 = 1;
+            if (tris[incidentTri4+1] !=  vertexNotEdge && tris[incidentTri4+1] != vertex2) startingVertex4 = 2;
+            if (tris[incidentTri4+2] !=  vertexNotEdge && tris[incidentTri4+2] != vertex2) startingVertex4 = 0;
 
             adj[incidentTri4+startingVertex4] = tri2Node;
 
-            if (adj[tris.size()-6]->getTIndex() != 0) legalizeEdge(tris.size()-6, 0);
-            if (adj[tris.size()-6]->getTIndex() != 0) legalizeEdge(tris.size()-3, 0);
+
+            uint newTri1 = tris.size()-6;
+            uint newTri2 = tris.size()-3;
+
+            if (adj[newTri1]->getTIndex() != 0) legalizeEdge(newTri1, 0);
+            if (adj[newTri2]->getTIndex() != 0) legalizeEdge(newTri2, 0);
+
+            //legalizeEdge(tris.size()-6, 0);
+            //legalizeEdge(tris.size()-3, 0);
 
         }
         break;
@@ -505,4 +532,9 @@ std::vector<uint> Triangulation::getTris() const
 std::vector<DagNode*> Triangulation::getAdj() const
 {
     return adj;
+}
+
+std::vector<bool> Triangulation::getActiveList() const
+{
+    return activeList;
 }
