@@ -15,10 +15,8 @@ class DagNode
         void setTIndex(int value);
 
         void setChildren(const std::vector<DagNode *> &value);
-        bool isAlive();
 private:
         int tIndex;
         std::vector<DagNode*> children;
-        bool dead = false;
 };
 #endif // DAGNODE_H

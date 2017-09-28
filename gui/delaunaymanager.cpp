@@ -152,7 +152,11 @@ void DelaunayManager::on_loadPointsPushButton_clicked() {
 
     if (!filename.isEmpty()) {
 
+        std::srand ( unsigned ( std::time(0) ) );
+
         std::vector<Point2Dd> points = FileUtils::getPointsFromFile(filename.toStdString());
+        std::random_shuffle ( points.begin(), points.end() );
+
         Timer t("Delaunay Triangulation");
         /****/
         //launch your triangulation algorithm here

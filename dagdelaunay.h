@@ -11,14 +11,14 @@ class DagDelaunay
     public:
         DagDelaunay();
 
-        DagNode* locate(Point2Dd x, Triangulation *t);
+        DagNode* locate(Point2Dd &x, Triangulation *t);
 
         DagNode *getRoot();
 
 private:
 
         DagNode *root;
-        DagNode *locateRec(Point2Dd x, Triangulation *t, DagNode *node);
+        DagNode *locateRec(Point2Dd &x, Triangulation *t, DagNode *node);
 };
 
 

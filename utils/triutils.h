@@ -7,7 +7,9 @@
 namespace TriUtils
 {
 
-    bool triContainsPoint(Triangle tri, Point2Dd x);
+    bool triContainsPoint(Triangle &tri, Point2Dd &x);
+    bool triContainsPoint(Point2Dd &a, Point2Dd &b, Point2Dd &c, Point2Dd &x);
+
 
 }
 
