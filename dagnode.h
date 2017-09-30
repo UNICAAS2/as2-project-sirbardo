@@ -3,6 +3,14 @@
 
 #include "triangle.h"
 
+
+
+/**
+ * @brief The DagNode class
+ * This class represents a single DAG node. It stores a triangle index, which "points" to the triangle that it corresponds to in the
+ * Delaunay Triangulation.
+ *
+ */
 class DagNode
 {
     public:

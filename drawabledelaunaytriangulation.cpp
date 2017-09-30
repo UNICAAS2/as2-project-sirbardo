@@ -24,22 +24,8 @@ void DrawableDelaunayTriangulation::drawEdges() const {
     {
 
 
-        for (int i=3; i<tris.size(); i+=3)
+        for (int i=3; i<tris.size(); i+=3) //I don't want to draw edges that go to the bounding triangle.
         {
-            /*
-            bool flag1=false, flag2=false, flag3=false;
-
-            if(tris[i] == 0 || tris[i] == 1 || tris[i] == 2)
-                flag1 = true;
-            if(tris[i+1] == 0 || tris[i+1] == 1 || tris[i+1] == 2)
-                flag2 = true;
-            if(tris[i+2] == 0 || tris[i+2] == 1 || tris[i+2] == 2)
-                flag3 = true;
-
-            if (!flag1 && !flag2) Viewer::drawLine(Pointd(vertices[tris[i]].x(), vertices[tris[i]].y(), thirdCoord), Pointd(vertices[tris[i+1]].x(), vertices[tris[i+1]].y(), thirdCoord), colorEdge, edgeWidth);
-            if (!flag2 && !flag3) Viewer::drawLine(Pointd(vertices[tris[i+1]].x(), vertices[tris[i+1]].y(), thirdCoord), Pointd(vertices[tris[i+2]].x(), vertices[tris[i+2]].y(), thirdCoord), colorEdge, edgeWidth);
-            if (!flag3 && !flag1) Viewer::drawLine(Pointd(vertices[tris[i+2]].x(), vertices[tris[i+2]].y(), thirdCoord), Pointd(vertices[tris[i]].x(), vertices[tris[i]].y(), thirdCoord), colorEdge, edgeWidth);
-            */
             if (activeList[i/3] == true && tris[i] != 0 && tris[i] != 1 && tris[i] != 2 &&
                 tris[i+1] != 0 && tris[i+1] != 1 && tris[i+1] != 2 &&
                 tris[i+2] != 0 && tris[i+2] != 1 && tris[i+2] != 2)

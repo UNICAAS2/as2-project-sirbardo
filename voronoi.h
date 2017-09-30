@@ -3,6 +3,13 @@
 
 #include <utils/delaunayutils.h>
 
+
+/**
+ * @brief The Voronoi class
+ * Holds information about vertices and edges to draw a Voronoi diagram - nothing else.
+ * Very basic class to be able to draw it and not much more.
+ */
+
 class Voronoi
 {
 

@@ -12,7 +12,7 @@ class DrawableVoronoi : public DrawableObject, public Voronoi
 {
 
 public:
-    DrawableVoronoi(Triangulation *t, double thirdcoord);
+    DrawableVoronoi(Triangulation *t, double thirdCoord);
 
 
     // DrawableObject interface

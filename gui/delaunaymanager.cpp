@@ -278,7 +278,6 @@ void DelaunayManager::on_voronoiDiagramPushButton_clicked()
 {
     if (triangulation.getVertices().size() <= 1) return;
 
-
     voronoi.refreshDiagram(&triangulation);
 
     mainWindow.updateGlCanvas();

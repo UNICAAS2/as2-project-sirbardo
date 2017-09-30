@@ -12,11 +12,15 @@
 
 class Voronoi;
 
+/**
+ * Algorithms related to the Delaunay Triangulation
+ *
+ */
+
 namespace DelaunayUtils
 {
 
     void createVoronoi(Triangulation *t, Voronoi *voronoi);
-
 }
 
 #endif // DelaunayUtils

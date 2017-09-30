@@ -6,6 +6,12 @@
 
 class Triangulation;
 
+
+/**
+ * @brief The DagDelaunay class
+ * This is the dag that is doubly linked with the Triangulation. It can locate a point inside a triangle, and as such
+ * acts as the search structure for the Triangulation.
+ */
 class DagDelaunay
 {
     public:
@@ -20,7 +26,7 @@ class DagDelaunay
 private:
 
         DagNode* root;
-        std::vector<DagNode*> allNodes;
+        std::vector<DagNode*> allNodes; //Pointers to every node in the dag, used to free the memory when killed.
         DagNode* locateRec(Point2Dd &x, Triangulation *t, DagNode *node);
 };
 

@@ -1,5 +1,11 @@
 #include "geomutils.h"
 
+/**
+ * @brief geomUtils::triContainsPoint, checks if a triangle contains a point
+ * @param tri Triangle
+ * @param x Point
+ * @return true if it does, false if it does not.
+ */
 
 bool geomUtils::triContainsPoint(Triangle &tri, Point2Dd &x)
 {
@@ -21,6 +27,15 @@ bool geomUtils::triContainsPoint(Triangle &tri, Point2Dd &x)
     return s>=0 && t>=0 && s+t<=D;
 }
 
+/**
+ * @brief geomUtils::triContainsPoint, checks if a triangle contains a point
+ * @param a first vertex of the triangle
+ * @param b second vertex of the triangle
+ * @param c third vertex of the triangle
+ * @param x point
+ * @return
+ */
+
 bool geomUtils::triContainsPoint(Point2Dd &a, Point2Dd &b, Point2Dd &c, Point2Dd &x)
 {
 
@@ -41,6 +56,13 @@ bool geomUtils::triContainsPoint(Point2Dd &a, Point2Dd &b, Point2Dd &c, Point2Dd
 }
 
 
+/**
+ * @brief geomUtils::isPointOnLine, checks if a point lies on a line segment / edge
+ * @param currPoint point to check
+ * @param point1 endpoint of segment
+ * @param point2 endpoint of segment
+ * @return
+ */
 bool geomUtils::isPointOnLine(Point2Dd &currPoint, Point2Dd &point1, Point2Dd &point2)
 {
     //https://stackoverflow.com/questions/11907947/how-to-check-if-a-point-lies-on-a-line-between-2-other-points
@@ -70,28 +92,16 @@ bool geomUtils::isPointOnLine(Point2Dd &currPoint, Point2Dd &point1, Point2Dd &p
 
 }
 
+/**
+ * @brief geomUtils::getCircumcenter
+ * Calculates the circumcenter of the given points. My implementation of the formula found here: https://en.wikipedia.org/wiki/Circumscribed_circle
+ * @param a
+ * @param b
+ * @param c
+ * @return circumcenter as Point2Dd
+ */
 Point2Dd geomUtils::getCircumcenter(const Point2Dd a, const Point2Dd b, const Point2Dd c)
 {
-/*
-    double dA, dB, dC, aux1, aux2, div;
-
-    //qDebug() << "computing circumcenter of " << a.x() << " " << a.y() << ", " << b.x() << " " << b.y() << ", " << c.x() << " " << c.y();
-
-    dA = a.x() * a.x() + a.y() + a.y();
-    dB = b.x() * b.x() + b.y() + b.y();
-    dC = c.x() * c.x() + c.y() + c.y();
-
-    aux1 = (dA*(c.y() - b.y()) + dB*(a.y() - c.y()) + dC*(b.y() - a.y()));
-    aux2 = -(dA*(c.x() - b.x()) + dB*(a.x() - c.x()) + dC*(b.x() - a.x()));
-    div = (2*(a.x()*(c.y() - b.y()) + b.x()*(a.y()-c.y()) + c.x()*(b.y() - a.y())));
-
-    //qDebug () << "CircumCenter" << aux1/div << " " << aux2/div;
-
-    Point2Dd center = Point2Dd (aux1/div, aux2/div);
-
-    return center;
-    */
-
     double dA, dB, dC;
 
     dA = pow(a.x(), 2) + pow(a.y(), 2);

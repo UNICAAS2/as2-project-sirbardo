@@ -5,6 +5,9 @@
 #include <common/point2d.h>
 #include <cmath>
 
+/**
+ * Algorithms related to geometry calculations.
+ */
 namespace geomUtils
 {
 
