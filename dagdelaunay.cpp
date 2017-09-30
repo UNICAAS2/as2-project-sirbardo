@@ -43,7 +43,7 @@ DagNode *DagDelaunay::locateRec(Point2Dd &x, Triangulation *t, DagNode* node)
         return node;
 
 
-#pragma omp parallel for
+//#pragma omp parallel for
     for(DagNode* child : node->getChildren())
     {
         Point2Dd a = t->getVertices()[t->getTris()[child->getTIndex()]];

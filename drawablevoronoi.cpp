@@ -1,6 +1,6 @@
 #include "drawablevoronoi.h"
 
-DrawableVoronoi::DrawableVoronoi(Triangulation *t):Voronoi(t)
+DrawableVoronoi::DrawableVoronoi(Triangulation *t, double thirdcoord):Voronoi(t), pointSize(2), colorPoint(), edgeWidth(1), colorEdge(), thirdCoord(thirdCoord)
 {
 
 }
@@ -20,29 +20,35 @@ double DrawableVoronoi::sceneRadius() const {
 
 void DrawableVoronoi::drawEdges() const {
 
+    /*
 
     for (int i = 0; i<vertices.size(); i++)
     {
-        qDebug() << "Lol";
+        //qDebug() << "Lol";
         Viewer::drawLine(Pointd(vertices[i].x(), vertices[i].y(), thirdCoord), Pointd(vertices[edges[(i*3)]].x(), vertices[edges[(i*3)]].y(), thirdCoord), colorEdge, edgeWidth);
         Viewer::drawLine(Pointd(vertices[i].x(), vertices[i].y(), thirdCoord), Pointd(vertices[edges[(i*3)+1]].x(), vertices[edges[(i*3)+1]].y(), thirdCoord), colorEdge, edgeWidth);
         Viewer::drawLine(Pointd(vertices[i].x(), vertices[i].y(), thirdCoord), Pointd(vertices[edges[(i*3)+2]].x(), vertices[edges[(i*3)+2]].y(), thirdCoord), colorEdge, edgeWidth);
     }
+    */
 
+    for (int i = 0; i<edges.size(); i+=2)
+    {
+        Viewer::drawLine(Pointd(vertices[edges[i]].x(), vertices[edges[i]].y(), thirdCoord), Pointd(vertices[edges[i+1]].x(), vertices[edges[i+1]].y(), thirdCoord), colorEdge, edgeWidth);
 
+    }
 
 }
 
 void DrawableVoronoi::drawPoints() const {
     glEnable(GL_POINT_SMOOTH);
-    glPointSize(pointSize);
+    glPointSize(10);
     glBegin(GL_POINTS);
 
     glColor3f(colorPoint.redF(), colorPoint.greenF(), colorPoint.blueF());
 
     for (Point2Dd i: vertices)
     {
-        qDebug() << i.x() << " " << i.y();
+        //qDebug() << i.x() << " " << i.y();
         glVertex3d(i.x(), i.y(), thirdCoord);
     }
 

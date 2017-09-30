@@ -25,6 +25,8 @@ void Voronoi::addDiagram(std::vector<Point2Dd> v, std::vector<uint> e)
     vertices.clear();
     edges.clear();
 
+    vertices = v;
+    edges = e;
 
 }
 

@@ -11,27 +11,48 @@ void DelaunayUtils::createVoronoi(Triangulation *t, Voronoi *voronoi)
 
     for (int i = 0; i < t->getActiveList().size(); i++)
     {
-        if (t->getActiveList()[i] == true)
+        if (    (t->getActiveList()[i]) == true &&
+                (t->getTris()[i*3]) != 0 &&
+                (t->getTris()[i*3]) != 1 &&
+                (t->getTris()[i*3]) != 2 &&
+                (t->getTris()[i*3+1]) != 0 &&
+                (t->getTris()[i*3+1]) != 1 &&
+                (t->getTris()[i*3+1]) != 2 &&
+                (t->getTris()[i*3+2]) != 0 &&
+                (t->getTris()[i*3+2]) != 1 &&
+                (t->getTris()[i*3+2]) != 2
+           )
         {
             activeTris.push_back(i*3);
             t_to_c.insert({i*3, activeTris.size()-1}); // mapping triangle index in triangulation to circumcenter index in voronoi
         }
     }
 
-    for ( unsigned i = 0; i < t_to_c.bucket_count(); ++i) {
+    /*
+    for ( unsigned i = 0; i < t_to_c.bucket_count(); ++i) {+1
       std::cout << "bucket #" << i << " contains:";
       for ( auto local_it = t_to_c.begin(i); local_it!= t_to_c.end(i); ++local_it )
         std::cout << " " << local_it->first << ":" << local_it->second;
       std::cout << std::endl;
-    }
+    }*/
 
 
     for (int i = 0; i<activeTris.size(); i++)
     {
-        vertices.push_back(geomUtils::getCircumcenter(t->getVertices()[t->getTris()[activeTris[i]]], t->getVertices()[t->getTris()[activeTris[i]+1]], t->getVertices()[t->getTris()[activeTris[i]+2]]));
+        vertices.push_back(
+        geomUtils::getCircumcenter( t->getVertices()[t->getTris()[activeTris[i]]],
+                                    t->getVertices()[t->getTris()[activeTris[i]+1]],
+                                    t->getVertices()[t->getTris()[activeTris[i]+2]]) );
 
+        qDebug()<< "Ho appena inserito il circumcentro di questi vertici: " << t->getTris()[activeTris[i]];
+        qDebug()<< "Ho appena inserito il circumcentro di questi vertici: " << t->getTris()[activeTris[i]+1];
+        qDebug()<< "Ho appena inserito il circumcentro di questi vertici: " <<t->getTris()[activeTris[i]+2];
+
+        edges.push_back(i);
         edges.push_back(t_to_c[t->getAdj()[activeTris[i]]->getTIndex()]);
+        edges.push_back(i);
         edges.push_back(t_to_c[t->getAdj()[activeTris[i]+1]->getTIndex()]);
+        edges.push_back(i);
         edges.push_back(t_to_c[t->getAdj()[activeTris[i]+2]->getTIndex()]);
 
     }

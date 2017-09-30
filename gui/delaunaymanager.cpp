@@ -43,7 +43,7 @@ DelaunayManager::DelaunayManager(QWidget *parent) :
                 Point2Dd(BOUNDINGBOX, BOUNDINGBOX)),
     boundingTriangle(BT_P1, BT_P2, BT_P3),
     triangulation(Triangle(boundingTriangle), 0),
-    voronoi(DrawableVoronoi(&triangulation))
+    voronoi(&triangulation, 0)
 {
 
     //UI setup
