@@ -40,20 +40,26 @@ void DelaunayUtils::createVoronoi(Triangulation *t, Voronoi *voronoi)
     for (int i = 0; i<activeTris.size(); i++)
     {
         vertices.push_back(
-        geomUtils::getCircumcenter( t->getVertices()[t->getTris()[activeTris[i]]],
-                                    t->getVertices()[t->getTris()[activeTris[i]+1]],
-                                    t->getVertices()[t->getTris()[activeTris[i]+2]]) );
+        geomUtils::getCircumcenter( t->getVertices()[t->getTris()[activeTris[i]+2]],
+                                    t->getVertices()[t->getTris()[activeTris[i]]],
+                                    t->getVertices()[t->getTris()[activeTris[i]+1]]
+                                    ) );
 
-        qDebug()<< "Ho appena inserito il circumcentro di questi vertici: " << t->getTris()[activeTris[i]];
-        qDebug()<< "Ho appena inserito il circumcentro di questi vertici: " << t->getTris()[activeTris[i]+1];
-        qDebug()<< "Ho appena inserito il circumcentro di questi vertici: " <<t->getTris()[activeTris[i]+2];
-
-        edges.push_back(i);
-        edges.push_back(t_to_c[t->getAdj()[activeTris[i]]->getTIndex()]);
-        edges.push_back(i);
-        edges.push_back(t_to_c[t->getAdj()[activeTris[i]+1]->getTIndex()]);
-        edges.push_back(i);
-        edges.push_back(t_to_c[t->getAdj()[activeTris[i]+2]->getTIndex()]);
+        if (t_to_c[t->getAdj()[activeTris[i]]->getTIndex()] != 0)
+        {
+            edges.push_back(i);
+            edges.push_back(t_to_c[t->getAdj()[activeTris[i]]->getTIndex()]);
+        }
+        if (t_to_c[t->getAdj()[activeTris[i]+1]->getTIndex()] != 0)
+        {
+            edges.push_back(i);
+            edges.push_back(t_to_c[t->getAdj()[activeTris[i]+1]->getTIndex()]);
+        }
+        if (t_to_c[t->getAdj()[activeTris[i]+2]->getTIndex()] != 0)
+        {
+            edges.push_back(i);
+            edges.push_back(t_to_c[t->getAdj()[activeTris[i]+2]->getTIndex()]);
+        }
 
     }
 

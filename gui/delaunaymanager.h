@@ -66,7 +66,7 @@ private slots:
     void on_showBoundingTriangleCheckBox_stateChanged(int arg1);
     void on_checkTriangulationPushButton_clicked();
     void on_generatePointsFilePushButton_clicked();
-
+    void on_clearVoronoiDiagramPushButton_clicked();
     void on_voronoiDiagramPushButton_clicked();
 
     /** Point clicked receiver **/

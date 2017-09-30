@@ -99,7 +99,7 @@ Point2Dd geomUtils::getCircumcenter(const Point2Dd a, const Point2Dd b, const Po
     dC = pow(c.x(), 2) + pow(c.y(), 2);
 
     double d = 2*( a.x() * ( b.y()-c.y() )    +    b.x() * (c.y()-a.y())   +   c.x()*(a.y()-b.y()) );
-    double ux = ( dA*(b.y() - c.y()) + dB*(c.y() + a.y()) + dC*(a.y()-b.y()) ) / d;
+    double ux = ( dA*(b.y() - c.y()) + dB*(c.y() - a.y()) + dC*(a.y()-b.y()) ) / d;
     double uy = ( dA*(c.x()-b.x()) + dB*(a.x()-c.x()) + dC*(b.x()-a.x()) ) / d;
 
     Point2Dd center = Point2Dd (ux, uy);

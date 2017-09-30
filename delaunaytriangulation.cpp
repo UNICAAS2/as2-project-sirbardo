@@ -542,7 +542,6 @@ void Triangulation::legalizeEdge(int tri, int edge)
             DelaunayTriangulation::Checker::isPointLyingInCircle(vertices[vertex1], vertices[vertex2], vertices[vertexNotEdge], vertices[oppositeVertex], false))
         {
             /*FLIP*/
-            if (geomUtils::isPointOnLine(vertices[vertexNotEdge], vertices[vertex1], vertices[vertex2])) qDebug() << "It works!";
 
 
             //deactivate the two triangles involved
@@ -662,7 +661,6 @@ void Triangulation::legalizeEdge(int tri, int edge)
             DelaunayTriangulation::Checker::isPointLyingInCircle(vertices[vertex1], vertices[vertex2], vertices[vertexNotEdge], vertices[oppositeVertex], false))
         {
             /*FLIP*/
-            if (geomUtils::isPointOnLine(vertices[vertexNotEdge], vertices[vertex1], vertices[vertex2])) qDebug() << "It works!";
 
 
             //deactivate the two triangles involved
@@ -783,7 +781,6 @@ void Triangulation::legalizeEdge(int tri, int edge)
             DelaunayTriangulation::Checker::isPointLyingInCircle(vertices[vertex1], vertices[vertex2], vertices[vertexNotEdge], vertices[oppositeVertex], false))
         {
             /*FLIP*/
-            if (geomUtils::isPointOnLine(vertices[vertexNotEdge], vertices[vertex1], vertices[vertex2])) qDebug() << "It works!";
 
 
             //deactivate the two triangles involved

@@ -1,6 +1,6 @@
 #include "drawablevoronoi.h"
 
-DrawableVoronoi::DrawableVoronoi(Triangulation *t, double thirdcoord):Voronoi(t), pointSize(2), colorPoint(), edgeWidth(1), colorEdge(), thirdCoord(thirdCoord)
+DrawableVoronoi::DrawableVoronoi(Triangulation *t, double thirdcoord):Voronoi(t), pointSize(2), colorPoint(), edgeWidth(500), colorEdge(), thirdCoord(thirdCoord)
 {
 
 }
@@ -33,6 +33,7 @@ void DrawableVoronoi::drawEdges() const {
 
     for (int i = 0; i<edges.size(); i+=2)
     {
+
         Viewer::drawLine(Pointd(vertices[edges[i]].x(), vertices[edges[i]].y(), thirdCoord), Pointd(vertices[edges[i+1]].x(), vertices[edges[i+1]].y(), thirdCoord), colorEdge, edgeWidth);
 
     }
@@ -40,8 +41,9 @@ void DrawableVoronoi::drawEdges() const {
 }
 
 void DrawableVoronoi::drawPoints() const {
+    /*
     glEnable(GL_POINT_SMOOTH);
-    glPointSize(10);
+    glPointSize(pointSize);
     glBegin(GL_POINTS);
 
     glColor3f(colorPoint.redF(), colorPoint.greenF(), colorPoint.blueF());
@@ -52,5 +54,5 @@ void DrawableVoronoi::drawPoints() const {
         glVertex3d(i.x(), i.y(), thirdCoord);
     }
 
-    glEnd();
+    glEnd();*/
 }

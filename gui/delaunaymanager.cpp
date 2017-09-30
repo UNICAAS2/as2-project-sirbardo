@@ -73,6 +73,8 @@ DelaunayManager::~DelaunayManager() {
     //when destroyed the manager, the mainWindow mustn't have the
     //reference to the bounding box.
     mainWindow.deleteObj(&boundingBox);
+    mainWindow.deleteObj(&triangulation);
+    mainWindow.deleteObj(&voronoi);
     delete ui;
 }
 
@@ -278,6 +280,18 @@ void DelaunayManager::on_voronoiDiagramPushButton_clicked()
 
 
     voronoi.refreshDiagram(&triangulation);
+
+    mainWindow.updateGlCanvas();
+
+}
+
+void DelaunayManager::on_clearVoronoiDiagramPushButton_clicked()
+{
+
+    voronoi.clearDiagram();
+
+    mainWindow.updateGlCanvas();
+
 }
 
 
