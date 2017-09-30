@@ -8,6 +8,8 @@
 #include <viewer/drawable_objects/drawableboundingbox2d.h>
 #include "drawableboundingtriangle.h"
 #include "drawabledelaunaytriangulation.h"
+#include "drawablevoronoi.h"
+
 
 namespace Ui {
     class DelaunayManager;
@@ -41,6 +43,7 @@ private:
     const DrawableBoundingBox2D boundingBox; //it is const because, once defined and initialized, it will never change!
     const DrawableBoundingTriangle boundingTriangle;
     DrawableDelaunayTriangulation triangulation;
+    DrawableVoronoi voronoi;
 
     /*****************
     * Private methods *
@@ -61,12 +64,14 @@ private slots:
 
     void on_clearPointsPushButton_clicked();
     void on_showBoundingTriangleCheckBox_stateChanged(int arg1);
+    void on_checkTriangulationPushButton_clicked();
+    void on_generatePointsFilePushButton_clicked();
+
+    void on_voronoiDiagramPushButton_clicked();
 
     /** Point clicked receiver **/
     void point2DClicked(const Point2Dd& p);
 
-    void on_checkTriangulationPushButton_clicked();
-    void on_generatePointsFilePushButton_clicked();
 };
 
 #endif // DELAUNAYMANAGER_H

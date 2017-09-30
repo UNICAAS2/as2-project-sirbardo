@@ -69,3 +69,26 @@ bool geomUtils::isPointOnLine(Point2Dd &currPoint, Point2Dd &point1, Point2Dd &p
 
 
 }
+
+Point2Dd geomUtils::getCircumcenter(const Point2Dd &a, const Point2Dd &b, const Point2Dd &c)
+{
+
+    double dA, dB, dC, aux1, aux2, div;
+
+    qDebug() << "computing circumcenter of " << a.x() << " " << a.y() << ", " << b.x() << " " << b.y() << ", " << c.x() << " " << c.y();
+
+    dA = a.x() * a.x() + a.y() + a.y();
+    dB = b.x() * b.x() + b.y() + b.y();
+    dC = c.x() * c.x() + c.y() + c.y();
+
+    aux1 = (dA*(c.y() - b.y()) + dB*(a.y() - c.y()) + dC*(b.y() - a.y()));
+    aux2 = -(dA*(c.x() - b.x()) + dB*(a.x() - c.x()) + dC*(b.x() - a.x()));
+    div = (2*(a.x()*(c.y() - b.y()) + b.x()*(a.y()-c.y()) + c.x()*(b.y() - a.y())));
+
+    qDebug () << "CircumCenter" << aux1/div << " " << aux2/div;
+
+    Point2Dd center = Point2Dd (aux1/div, aux2/div);
+
+    return center;
+}
+

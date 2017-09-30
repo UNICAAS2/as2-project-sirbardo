@@ -9,6 +9,7 @@
 
 #include "utils/fileutils.h"
 #include "utils/delaunay_checker.h"
+#include "utils/delaunayutils.h"
 
 #include <common/arrays.h>
 #include <common/timer.h>
@@ -41,8 +42,10 @@ DelaunayManager::DelaunayManager(QWidget *parent) :
     boundingBox(Point2Dd(-BOUNDINGBOX, -BOUNDINGBOX),
                 Point2Dd(BOUNDINGBOX, BOUNDINGBOX)),
     boundingTriangle(BT_P1, BT_P2, BT_P3),
-    triangulation(Triangle(boundingTriangle), 0)
+    triangulation(Triangle(boundingTriangle), 0),
+    voronoi(DrawableVoronoi(&triangulation))
 {
+
     //UI setup
     ui->setupUi(this);
     connect(&mainWindow, SIGNAL(point2DClicked(Point2Dd)), this, SLOT(point2DClicked(Point2Dd)));
@@ -56,6 +59,7 @@ DelaunayManager::DelaunayManager(QWidget *parent) :
     // the mainWindow will take care of the rendering of the bounding box
     mainWindow.pushObj(&boundingBox, "Bounding box");
     mainWindow.pushObj(&triangulation, "Triangulation");
+    mainWindow.pushObj(&voronoi, "Voronoi");
     mainWindow.updateGlCanvas();
 
     fitScene();
@@ -157,7 +161,7 @@ void DelaunayManager::on_loadPointsPushButton_clicked() {
         std::srand ( unsigned ( std::time(0) ) );
 
         std::vector<Point2Dd> points = FileUtils::getPointsFromFile(filename.toStdString());
-        std::random_shuffle ( points.begin(), points.end() );
+        //std::random_shuffle ( points.begin(), points.end() );
 
         Timer t("Delaunay Triangulation");
         /****/
@@ -267,3 +271,13 @@ void DelaunayManager::on_generatePointsFilePushButton_clicked() {
         FileUtils::generateRandomPointFile(filename.toStdString(), BOUNDINGBOX, number);
     }
 }
+
+void DelaunayManager::on_voronoiDiagramPushButton_clicked()
+{
+    if (triangulation.getVertices().size() <= 1) return;
+
+
+    voronoi.refreshDiagram(&triangulation);
+}
+
+
